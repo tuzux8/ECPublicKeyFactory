@@ -1,14 +1,17 @@
-import sys, getopt
+import sys
+import getopt
 import hashlib
 from ecdsa.keys import VerifyingKey
 from ecdsa.curves import NIST256p
 
 
-def get_public_key_fingerprint(curve, temp_public_key):
+def get_public_key_fingerprint(curve: object, temp_public_key: object) \
+        -> object:
     """
     Validate the public key if it is related to the given EC curve and
     formats the public key to a uncompressed byte string.
-    Afterwards the function create a hash value of the uncompressed public key value
+    Afterwards the function create a hash value of the uncompressed
+    public key value
 
     :param curve: currently is only NIST256p supported
     :param temp_public_key: public key in hex format
@@ -41,7 +44,7 @@ def main(argv):
         print("Used parameter is not valid")
         sys.exit(2)
     for opt, arg in opts:
-        if opt in("-k", "--key"):
+        if opt in ("-k", "--key"):
             if len(str(arg)) == 130:
                 public_key_string = arg
             else:
@@ -69,4 +72,5 @@ if __name__ == "__main__":
     temp_pk = main(sys.argv[1:])
 
     # Print Hash Value
-    print("EC Public Key Hash Fingerprint: ", get_public_key_fingerprint(EC_CURVE, temp_pk))
+    print("EC Public Key Hash Fingerprint: ",
+          get_public_key_fingerprint(EC_CURVE, temp_pk))
